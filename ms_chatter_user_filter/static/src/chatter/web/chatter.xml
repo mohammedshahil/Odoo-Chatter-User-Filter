@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mail.Chatter" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o-mail-Chatter-content')]" position="before">
+            <div class="o-mail-Chatter-userFilter btn-group ms-auto p-2" t-if="state.thread">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <t t-if="state.selectedUserName">
+                        <t t-esc="state.selectedUserName"/>
+                    </t>
+                    <t t-else="">
+                        Filter by User
+                    </t>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" t-on-click="() => this.filterByUser(null)">All Users</a></li>
+                    <t t-foreach="uniqueMessageAuthors" t-as="user" t-key="user.id">
+                        <li><a class="dropdown-item" href="#" t-on-click="() => this.filterByUser(user.name)"><t t-esc="user.name"/></a></li>
+                    </t>
+                </ul>
+            </div>
+        </xpath>
+        <xpath expr="//Thread" position="attributes">
+            <attribute name="thread">threadForRender</attribute>
+        </xpath>
+    </t>
+</templates>
